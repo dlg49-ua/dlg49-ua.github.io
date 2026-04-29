@@ -292,11 +292,18 @@
       gap: 24px; margin-top: 56px;
     }
     .screenshot-item {
-      border-radius: 16px; overflow: hidden;
+      border-radius: 16px;
       background: #1a1a2e; border: 1px solid rgba(255,255,255,0.08);
-      aspect-ratio: 9/16; display: flex; flex-direction: column;
+      display: flex; flex-direction: column;
       align-items: center; justify-content: center; gap: 12px;
       transition: transform 0.2s;
+    }
+    .screenshot-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      border-radius: 16px;
     }
     .screenshot-item:hover { transform: scale(1.02); }
     .screenshot-placeholder-icon {
@@ -628,40 +635,22 @@
       </div>
       <div class="screenshots-grid">
         <div class="screenshot-item fade-up">
-          <div class="screenshot-placeholder-icon">
-            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-          </div>
-          <span class="screenshot-label">Pantalla de inicio</span>
+          <img src="images/inicio.jpeg" alt="Pantalla de inicio"/>
         </div>
         <div class="screenshot-item fade-up" style="transition-delay:0.1s">
-          <div class="screenshot-placeholder-icon">
-            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/></svg>
-          </div>
-          <span class="screenshot-label">Mis documentos</span>
+          <img src="images/docs.jpeg" alt="Pantalla de documentos"/>
         </div>
         <div class="screenshot-item fade-up" style="transition-delay:0.2s">
-          <div class="screenshot-placeholder-icon">
-            <svg viewBox="0 0 24 24"><path d="M22 9V7h-2V5c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-2h2v-2h-2v-2h2v-2h-2V9h2zm-4 10H4V5h14v14z"/></svg>
-          </div>
-          <span class="screenshot-label">Detalle del documento</span>
+          <img src="images/detalle.jpeg" alt=""Pantalla de detalle de documentos"/>
         </div>
         <div class="screenshot-item fade-up" style="transition-delay:0.3s">
-          <div class="screenshot-placeholder-icon">
-            <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
-          </div>
-          <span class="screenshot-label">Mis tareas</span>
+          <img src="images/tareas.jpeg" alt="Pantalla de tareas"/>
         </div>
         <div class="screenshot-item fade-up" style="transition-delay:0.4s">
-          <div class="screenshot-placeholder-icon">
-            <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3z"/></svg>
-          </div>
-          <span class="screenshot-label">Vinculaciones</span>
+          <img src="images/vinculos.jpeg" alt="Pantalla de vinculación"/>
         </div>
         <div class="screenshot-item fade-up" style="transition-delay:0.5s">
-          <div class="screenshot-placeholder-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z"/></svg>
-          </div>
-          <span class="screenshot-label">Perfil y ajustes</span>
+          <img src="images/perfil.jpeg" alt="Pantalla de perfil">
         </div>
       </div>
     </div>
