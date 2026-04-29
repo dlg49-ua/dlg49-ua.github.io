@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestionate!!! — Tu gestión, simplificada</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --azul:        #1565C0;
+      --azul-claro:  #1976D2;
+      --azul-suave:  #E3F2FD;
+      --verde:       #2E7D32;
+      --verde-suave: #E8F5E9;
+      --rojo:        #C62828;
+      --rojo-suave:  #FFEBEE;
+      --amarillo:    #F9A825;
+      --amarillo-suave: #FFFDE7;
+      --gris-claro:  #F5F7FA;
+      --gris-medio:  #E0E7EF;
+      --gris-texto:  #6B7280;
+      --negro:       #111827;
+      --blanco:      #FFFFFF;
+      --radio:       14px;
+      --sombra:      0 4px 24px rgba(21,101,192,0.10);
+      --sombra-card: 0 2px 12px rgba(0,0,0,0.07);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--negro);
+      background: var(--blanco);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gris-medio);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 64px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.35rem; color: var(--azul); text-decoration: none;
+    }
+    .nav-logo .logo-icon {
+      width: 36px; height: 36px; background: var(--azul);
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    }
+    .nav-logo .logo-icon svg { width: 20px; height: 20px; fill: white; }
+    .nav-cta {
+      background: var(--azul); color: white; border: none; border-radius: 8px;
+      padding: 9px 22px; font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem; font-weight: 600; cursor: pointer;
+      text-decoration: none; transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--azul-claro); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      background: linear-gradient(135deg, #f0f6ff 0%, #ffffff 60%, #e8f5e9 100%);
+      padding: 100px 40px 60px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -120px; right: -120px;
+      width: 520px; height: 520px;
+      background: radial-gradient(circle, rgba(21,101,192,0.08) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -80px; left: -80px;
+      width: 380px; height: 380px;
+      background: radial-gradient(circle, rgba(46,125,50,0.07) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero-inner {
+      max-width: 1160px; margin: 0 auto; width: 100%;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+      position: relative; z-index: 1;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--azul-suave); color: var(--azul);
+      border-radius: 100px; padding: 5px 14px;
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.03em;
+      margin-bottom: 20px;
+    }
+    .hero-badge span { width: 6px; height: 6px; background: var(--azul); border-radius: 50%; }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      line-height: 1.12; color: var(--negro);
+      margin-bottom: 22px;
+    }
+    .hero h1 em { color: var(--azul); font-style: normal; }
+    .hero p {
+      font-size: 1.1rem; line-height: 1.7; color: var(--gris-texto);
+      margin-bottom: 36px; max-width: 480px;
+    }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--azul); color: white; border: none;
+      border-radius: 10px; padding: 14px 28px;
+      font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 600;
+      cursor: pointer; text-decoration: none; transition: all 0.2s;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-primary:hover { background: #0d47a1; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(21,101,192,0.25); }
+    .btn-secondary {
+      background: white; color: var(--azul);
+      border: 2px solid var(--azul);
+      border-radius: 10px; padding: 12px 28px;
+      font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 600;
+      cursor: pointer; text-decoration: none; transition: all 0.2s;
+    }
+    .btn-secondary:hover { background: var(--azul-suave); }
+
+    /* Phone mockup */
+    .hero-visual { display: flex; justify-content: center; align-items: center; }
+    .phone-wrap {
+      position: relative;
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-16px); }
+    }
+    .phone {
+      width: 260px; height: 520px;
+      background: white;
+      border-radius: 40px;
+      border: 8px solid #1a1a2e;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.18), 0 0 0 2px #2a2a4e;
+      overflow: hidden; position: relative;
+    }
+    .phone-notch {
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 100px; height: 22px; background: #1a1a2e; border-radius: 0 0 16px 16px;
+      z-index: 2;
+    }
+    .phone-screen {
+      width: 100%; height: 100%;
+      background: var(--gris-claro);
+      display: flex; flex-direction: column;
+      padding-top: 28px;
+    }
+    .phone-topbar {
+      background: white; padding: 12px 16px 10px;
+      border-bottom: 1px solid var(--gris-medio);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .phone-topbar-title { font-size: 0.85rem; font-weight: 700; color: var(--negro); }
+    .phone-topbar-icons { display: flex; gap: 6px; }
+    .phone-topbar-icons span {
+      width: 20px; height: 20px; background: var(--gris-claro);
+      border-radius: 50%; display: block;
+    }
+    .phone-content { padding: 14px 12px; display: flex; flex-direction: column; gap: 10px; }
+    .phone-card {
+      background: white; border-radius: 10px;
+      padding: 12px; box-shadow: var(--sombra-card);
+    }
+    .phone-card-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    .phone-card-title { font-size: 0.72rem; font-weight: 600; color: var(--negro); }
+    .phone-chip {
+      font-size: 0.58rem; font-weight: 700; padding: 2px 7px;
+      border-radius: 100px; letter-spacing: 0.03em;
+    }
+    .chip-salud { background: var(--verde-suave); color: var(--verde); }
+    .chip-dinero { background: var(--rojo-suave); color: var(--rojo); }
+    .chip-admin { background: var(--azul-suave); color: var(--azul); }
+    .phone-card-date { font-size: 0.62rem; color: var(--gris-texto); }
+    .phone-fab {
+      position: absolute; bottom: 20px; right: 16px;
+      width: 42px; height: 42px; background: var(--azul);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 12px rgba(21,101,192,0.35);
+    }
+    .phone-fab svg { width: 20px; height: 20px; fill: white; }
+
+    /* Floating badges */
+    .badge-float {
+      position: absolute; background: white;
+      border-radius: 12px; padding: 10px 14px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.78rem; font-weight: 600; white-space: nowrap;
+      animation: floatBadge 3s ease-in-out infinite;
+    }
+    .badge-float.left { left: -80px; top: 30%; animation-delay: 0.5s; }
+    .badge-float.right { right: -70px; bottom: 30%; animation-delay: 1.2s; }
+    @keyframes floatBadge {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .badge-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+    /* ── SECCIÓN GENÉRICA ── */
+    section { padding: 100px 40px; }
+    .section-inner { max-width: 1160px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em;
+      color: var(--azul); text-transform: uppercase; margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      line-height: 1.2; color: var(--negro); margin-bottom: 16px;
+    }
+    .section-subtitle {
+      font-size: 1.05rem; color: var(--gris-texto);
+      line-height: 1.7; max-width: 560px;
+    }
+
+    /* ── CÓMO FUNCIONA ── */
+    .how { background: var(--gris-claro); }
+    .steps {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 32px; margin-top: 56px;
+    }
+    .step {
+      background: white; border-radius: var(--radio);
+      padding: 32px 28px; box-shadow: var(--sombra-card);
+      position: relative; overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .step:hover { transform: translateY(-4px); box-shadow: var(--sombra); }
+    .step-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 3.5rem; color: var(--gris-medio);
+      line-height: 1; margin-bottom: 16px;
+      position: absolute; top: 16px; right: 20px;
+    }
+    .step-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+    }
+    .step-icon svg { width: 26px; height: 26px; }
+    .step h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
+    .step p { font-size: 0.92rem; color: var(--gris-texto); line-height: 1.6; }
+
+    /* ── CARACTERÍSTICAS ── */
+    .features-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 24px; margin-top: 56px;
+    }
+    .feature-card {
+      border: 1px solid var(--gris-medio); border-radius: var(--radio);
+      padding: 28px; transition: all 0.2s; position: relative; overflow: hidden;
+    }
+    .feature-card:hover { border-color: var(--azul); box-shadow: var(--sombra); }
+    .feature-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--azul), var(--azul-claro));
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .feature-card:hover::before { opacity: 1; }
+    .feature-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: var(--azul-suave); display: flex; align-items: center;
+      justify-content: center; margin-bottom: 16px;
+    }
+    .feature-icon svg { width: 22px; height: 22px; fill: var(--azul); }
+    .feature-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .feature-card p { font-size: 0.9rem; color: var(--gris-texto); line-height: 1.6; }
+
+    /* ── CAPTURAS ── */
+    .screenshots { background: var(--negro); padding: 100px 40px; }
+    .screenshots .section-title { color: white; }
+    .screenshots .section-label { color: var(--azul-claro); }
+    .screenshots .section-subtitle { color: rgba(255,255,255,0.6); }
+    .screenshots-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px; margin-top: 56px;
+    }
+    .screenshot-item {
+      border-radius: 16px; overflow: hidden;
+      background: #1a1a2e; border: 1px solid rgba(255,255,255,0.08);
+      aspect-ratio: 9/16; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 12px;
+      transition: transform 0.2s;
+    }
+    .screenshot-item:hover { transform: scale(1.02); }
+    .screenshot-placeholder-icon {
+      width: 56px; height: 56px; border-radius: 16px;
+      background: rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .screenshot-placeholder-icon svg { width: 28px; height: 28px; fill: rgba(255,255,255,0.3); }
+    .screenshot-label {
+      font-size: 0.8rem; color: rgba(255,255,255,0.3);
+      font-weight: 500; letter-spacing: 0.02em;
+    }
+
+    /* ── TESTIMONIOS ── */
+    .testimonials { background: var(--gris-claro); }
+    .testimonials-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px; margin-top: 56px;
+    }
+    .testimonial {
+      background: white; border-radius: var(--radio);
+      padding: 28px; box-shadow: var(--sombra-card);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .testimonial:hover { transform: translateY(-3px); box-shadow: var(--sombra); }
+    .testimonial-stars { color: #F9A825; font-size: 1rem; margin-bottom: 14px; }
+    .testimonial-text {
+      font-size: 0.95rem; line-height: 1.7; color: var(--negro);
+      margin-bottom: 20px; font-style: italic;
+    }
+    .testimonial-author { display: flex; align-items: center; gap: 12px; }
+    .testimonial-avatar {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: var(--azul); display: flex; align-items: center;
+      justify-content: center; font-weight: 700; color: white; font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .testimonial-name { font-weight: 700; font-size: 0.9rem; }
+    .testimonial-role { font-size: 0.8rem; color: var(--gris-texto); }
+
+    /* ── CATEGORÍAS ── */
+    .categories { padding: 80px 40px; }
+    .cats-row {
+      display: flex; flex-wrap: wrap; gap: 12px;
+      margin-top: 32px;
+    }
+    .cat-chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 18px; border-radius: 100px;
+      font-size: 0.9rem; font-weight: 600;
+    }
+    .cat-chip .dot { width: 8px; height: 8px; border-radius: 50%; }
+
+    /* ── CTA ── */
+    .cta {
+      background: linear-gradient(135deg, var(--azul) 0%, #0d47a1 100%);
+      padding: 100px 40px; text-align: center; position: relative; overflow: hidden;
+    }
+    .cta::before {
+      content: '';
+      position: absolute; top: -100px; right: -100px;
+      width: 400px; height: 400px;
+      background: rgba(255,255,255,0.05); border-radius: 50%;
+    }
+    .cta::after {
+      content: '';
+      position: absolute; bottom: -80px; left: -80px;
+      width: 300px; height: 300px;
+      background: rgba(255,255,255,0.04); border-radius: 50%;
+    }
+    .cta-inner { position: relative; z-index: 1; }
+    .cta h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: white; margin-bottom: 16px; line-height: 1.2;
+    }
+    .cta p { font-size: 1.05rem; color: rgba(255,255,255,0.75); margin-bottom: 40px; }
+    .cta-btns { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .btn-white {
+      background: white; color: var(--azul);
+      border-radius: 10px; padding: 14px 32px;
+      font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 700;
+      text-decoration: none; transition: all 0.2s; display: inline-block;
+    }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+    .btn-outline-white {
+      background: transparent; color: white;
+      border: 2px solid rgba(255,255,255,0.5);
+      border-radius: 10px; padding: 12px 32px;
+      font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 600;
+      text-decoration: none; transition: all 0.2s; display: inline-block;
+    }
+    .btn-outline-white:hover { border-color: white; background: rgba(255,255,255,0.08); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--negro); padding: 48px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .footer-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem; color: white;
+    }
+    footer p { font-size: 0.85rem; color: rgba(255,255,255,0.4); }
+
+    /* ── ANIMACIONES DE ENTRADA ── */
+    .fade-up {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 0 20px; }
+      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+      .hero-visual { order: -1; }
+      .badge-float.left, .badge-float.right { display: none; }
+      .steps { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .screenshots-grid { grid-template-columns: repeat(2, 1fr); }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      section { padding: 70px 20px; }
+      .screenshots { padding: 70px 20px; }
+      .hero { padding: 100px 20px 60px; }
+    }
+    @media (max-width: 560px) {
+      .screenshots-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
+      </div>
+      Gestionate!!!
+    </a>
+    <a href="#descarga" class="nav-cta">Descarga gratis</a>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-text fade-up">
+        <div class="hero-badge"><span></span> Gestión inteligente de documentos</div>
+        <h1>Tus papeles, <em>organizados solos</em></h1>
+        <p>
+          Gestionate!!! escanea cualquier documento con tu móvil, lo resume en lenguaje sencillo
+          con inteligencia artificial y crea recordatorios automáticos para que no se te escape nada importante.
+        </p>
+        <div class="hero-btns">
+          <a href="#descarga" class="btn-primary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14zm-4.2-5.78v1.75l3.2-2.99L12.8 9v1.7c-3.11.43-4.35 2.56-4.8 4.7 1.11-1.49 2.7-2.18 4.8-2.18z"/></svg>
+            Descargar la app
+          </a>
+          <a href="#como-funciona" class="btn-secondary">Ver cómo funciona</a>
+        </div>
+      </div>
+
+      <div class="hero-visual fade-up">
+        <div class="phone-wrap">
+          <!-- Badge izquierda -->
+          <div class="badge-float left">
+            <div class="badge-dot" style="background: var(--verde)"></div>
+            Resumen generado ✓
+          </div>
+          <!-- Badge derecha -->
+          <div class="badge-float right">
+            <div class="badge-dot" style="background: var(--azul)"></div>
+            Recordatorio creado ✓
+          </div>
+
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <div class="phone-topbar">
+                <span class="phone-topbar-title">Mis documentos</span>
+                <div class="phone-topbar-icons">
+                  <span></span><span></span>
+                </div>
+              </div>
+              <div class="phone-content">
+                <div class="phone-card">
+                  <div class="phone-card-header">
+                    <span class="phone-card-title">Cita médica cardiología</span>
+                    <span class="phone-chip chip-salud">SALUD</span>
+                  </div>
+                  <div class="phone-card-date">20 may 2026 · 10:30</div>
+                </div>
+                <div class="phone-card">
+                  <div class="phone-card-header">
+                    <span class="phone-card-title">Factura luz abril</span>
+                    <span class="phone-chip chip-dinero">DINERO</span>
+                  </div>
+                  <div class="phone-card-date">Vence 15 may 2026</div>
+                </div>
+                <div class="phone-card">
+                  <div class="phone-card-header">
+                    <span class="phone-card-title">Renovación DNI</span>
+                    <span class="phone-chip chip-admin">ADMIN</span>
+                  </div>
+                  <div class="phone-card-date">Cita 3 jun 2026</div>
+                </div>
+              </div>
+              <div class="phone-fab">
+                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CÓMO FUNCIONA ── -->
+  <section class="how" id="como-funciona">
+    <div class="section-inner">
+      <div class="fade-up">
+        <div class="section-label">Cómo funciona</div>
+        <h2 class="section-title">Tres pasos. Sin complicaciones.</h2>
+        <p class="section-subtitle">
+          Diseñado para que cualquier persona, independientemente de su nivel tecnológico,
+          pueda gestionar sus documentos sin esfuerzo.
+        </p>
+      </div>
+      <div class="steps">
+        <div class="step fade-up">
+          <div class="step-num">01</div>
+          <div class="step-icon" style="background: var(--azul-suave)">
+            <svg viewBox="0 0 24 24" fill="var(--azul)"><path d="M12 15.5A3.5 3.5 0 0 1 8.5 12 3.5 3.5 0 0 1 12 8.5a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5m7.43-2.92c.04-.3.07-.62.07-.93s-.03-.64-.07-1l2.2-1.68c.19-.15.24-.42.12-.64l-2.1-3.61c-.12-.22-.39-.3-.61-.22l-2.57 1.03c-.56-.43-1.16-.78-1.82-1.05l-.38-2.73C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.73c-.66.27-1.26.62-1.82 1.05L4.74 5.17c-.22-.08-.49 0-.61.22L2.03 9c-.12.22-.06.49.12.64L4.35 11.3c-.04.36-.05.71-.05 1.07s.02.7.06 1l-2.18 1.7c-.19.15-.24.42-.12.64l2.1 3.61c.12.22.39.3.61.22l2.57-1.03c.56.43 1.16.78 1.82 1.05l.38 2.73c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.73c.66-.27 1.26-.62 1.82-1.05l2.57 1.03c.22.08.49 0 .61-.22l2.1-3.61c.12-.22.06-.49-.12-.64l-2.19-1.72z"/></svg>
+          </div>
+          <h3>Escanea el documento</h3>
+          <p>Apunta la cámara a cualquier carta, factura, receta o notificación. En segundos, el texto estará digitalizado.</p>
+        </div>
+        <div class="step fade-up" style="transition-delay: 0.1s">
+          <div class="step-num">02</div>
+          <div class="step-icon" style="background: var(--verde-suave)">
+            <svg viewBox="0 0 24 24" fill="var(--verde)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+          </div>
+          <h3>La IA lo analiza</h3>
+          <p>Gemini AI procesa el texto, genera un resumen claro y detecta fechas importantes automáticamente.</p>
+        </div>
+        <div class="step fade-up" style="transition-delay: 0.2s">
+          <div class="step-num">03</div>
+          <div class="step-icon" style="background: var(--amarillo-suave)">
+            <svg viewBox="0 0 24 24" fill="var(--amarillo)"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+          </div>
+          <h3>Recordatorio automático</h3>
+          <p>Se crea una tarea y un recordatorio en tu calendario. El móvil te avisará cuando llegue el momento.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CARACTERÍSTICAS ── -->
+  <section id="caracteristicas">
+    <div class="section-inner">
+      <div class="fade-up">
+        <div class="section-label">Características</div>
+        <h2 class="section-title">Todo lo que necesitas, en un solo sitio</h2>
+        <p class="section-subtitle">
+          Pensada para personas mayores y adultos con poco tiempo que necesitan
+          tener sus gestiones bajo control sin complicaciones.
+        </p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card fade-up">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
+          </div>
+          <h3>OCR inteligente</h3>
+          <p>Reconocimiento de texto en tiempo real que funciona incluso con documentos torcidos, manchados o con letra pequeña.</p>
+        </div>
+        <div class="feature-card fade-up" style="transition-delay: 0.05s">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24"><path d="M11.5 2C6.81 2 3 5.81 3 10.5S6.81 19 11.5 19h.5v3c4.86-2.34 8-7 8-11.5C20 5.81 16.19 2 11.5 2zm1 14.5h-2v-2h2v2zm0-4h-2c0-3.25 3-3 3-5 0-1.1-.9-2-2-2s-2 .9-2 2h-2c0-2.21 1.79-4 4-4s4 1.79 4 4c0 2.5-3 2.75-3 5z"/></svg>
+          </div>
+          <h3>Resúmenes con IA</h3>
+          <p>Gemini AI convierte documentos complejos en explicaciones sencillas. Ideal para personas que no están familiarizadas con el lenguaje burocrático.</p>
+        </div>
+        <div class="feature-card fade-up" style="transition-delay: 0.1s">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24"><path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/></svg>
+          </div>
+          <h3>Recordatorios automáticos</h3>
+          <p>Las fechas detectadas en el documento se convierten en alarmas y eventos en tu calendario nativo automáticamente.</p>
+        </div>
+        <div class="feature-card fade-up" style="transition-delay: 0.15s">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+          </div>
+          <h3>Sistema de vinculación</h3>
+          <p>Vincula tu cuenta con la de un familiar o cuidador para que pueda ayudarte a gestionar tus documentos de forma segura.</p>
+        </div>
+        <div class="feature-card fade-up" style="transition-delay: 0.2s">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+          </div>
+          <h3>Categorización automática</h3>
+          <p>Salud, Dinero, Administración, Social… cada documento se clasifica solo para que encuentres lo que buscas en segundos.</p>
+        </div>
+        <div class="feature-card fade-up" style="transition-delay: 0.25s">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 4l5 2.18V11c0 3.5-2.33 6.79-5 7.93-2.67-1.14-5-4.43-5-7.93V7.18L12 5z"/></svg>
+          </div>
+          <h3>Privacidad y seguridad</h3>
+          <p>Todos tus datos se almacenan localmente en tu dispositivo. Copia de seguridad opcional en Google Drive con tu cuenta.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CAPTURAS ── -->
+  <section class="screenshots" id="capturas">
+    <div class="section-inner">
+      <div class="fade-up">
+        <div class="section-label">Capturas de pantalla</div>
+        <h2 class="section-title">Diseñada para ser fácil</h2>
+        <p class="section-subtitle">
+          Interfaz limpia y accesible, pensada para que cualquier persona
+          pueda usarla desde el primer momento.
+        </p>
+      </div>
+      <div class="screenshots-grid">
+        <div class="screenshot-item fade-up">
+          <div class="screenshot-placeholder-icon">
+            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+          </div>
+          <span class="screenshot-label">Pantalla de inicio</span>
+        </div>
+        <div class="screenshot-item fade-up" style="transition-delay:0.1s">
+          <div class="screenshot-placeholder-icon">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/></svg>
+          </div>
+          <span class="screenshot-label">Mis documentos</span>
+        </div>
+        <div class="screenshot-item fade-up" style="transition-delay:0.2s">
+          <div class="screenshot-placeholder-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 9V7h-2V5c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-2h2v-2h-2v-2h2v-2h-2V9h2zm-4 10H4V5h14v14z"/></svg>
+          </div>
+          <span class="screenshot-label">Detalle del documento</span>
+        </div>
+        <div class="screenshot-item fade-up" style="transition-delay:0.3s">
+          <div class="screenshot-placeholder-icon">
+            <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+          </div>
+          <span class="screenshot-label">Mis tareas</span>
+        </div>
+        <div class="screenshot-item fade-up" style="transition-delay:0.4s">
+          <div class="screenshot-placeholder-icon">
+            <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3z"/></svg>
+          </div>
+          <span class="screenshot-label">Vinculaciones</span>
+        </div>
+        <div class="screenshot-item fade-up" style="transition-delay:0.5s">
+          <div class="screenshot-placeholder-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z"/></svg>
+          </div>
+          <span class="screenshot-label">Perfil y ajustes</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CATEGORÍAS ── -->
+  <section class="categories">
+    <div class="section-inner">
+      <div class="fade-up">
+        <div class="section-label">Categorías</div>
+        <h2 class="section-title">Cada documento en su lugar</h2>
+        <p class="section-subtitle">La IA clasifica automáticamente cada documento en su categoría. Tú solo escaneas.</p>
+      </div>
+      <div class="cats-row fade-up">
+        <div class="cat-chip" style="background:var(--verde-suave); color:var(--verde)">
+          <div class="dot" style="background:var(--verde)"></div>Salud
+        </div>
+        <div class="cat-chip" style="background:var(--rojo-suave); color:var(--rojo)">
+          <div class="dot" style="background:var(--rojo)"></div>Dinero
+        </div>
+        <div class="cat-chip" style="background:var(--azul-suave); color:var(--azul)">
+          <div class="dot" style="background:var(--azul)"></div>Administración
+        </div>
+        <div class="cat-chip" style="background:var(--amarillo-suave); color:var(--amarillo)">
+          <div class="dot" style="background:var(--amarillo)"></div>Social
+        </div>
+        <div class="cat-chip" style="background:#F5F5F5; color:#616161">
+          <div class="dot" style="background:#616161"></div>Otros
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TESTIMONIOS ── -->
+  <section class="testimonials" id="testimonios">
+    <div class="section-inner">
+      <div class="fade-up">
+        <div class="section-label">Testimonios</div>
+        <h2 class="section-title">Lo que dicen nuestros usuarios</h2>
+        <p class="section-subtitle">Personas reales que han simplificado su vida con Gestionate!!!</p>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial fade-up">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">
+            "Mi madre tiene 74 años y antes perdía todas las cartas del médico.
+            Ahora le hago una foto con Gestionate!!! y ella recibe el recordatorio automáticamente.
+            Ha cambiado nuestra rutina completamente."
+          </p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">MA</div>
+            <div>
+              <div class="testimonial-name">María A.</div>
+              <div class="testimonial-role">Hija cuidadora, Valencia</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial fade-up" style="transition-delay:0.1s">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">
+            "Soy autónomo y tenía facturas por todos lados. Con esta app escaneo todo,
+            la IA me dice cuándo vence cada pago y me recuerda antes de la fecha.
+            No he vuelto a pagar un recargo."
+          </p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar" style="background: var(--verde)">JL</div>
+            <div>
+              <div class="testimonial-name">José Luis R.</div>
+              <div class="testimonial-role">Autónomo, Alicante</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial fade-up" style="transition-delay:0.2s">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">
+            "Lo que más me gusta es el resumen en lenguaje sencillo. Mi abuelo
+            ahora entiende sus cartas del médico sin tener que llamarme cada vez.
+            La app es clarísima y muy fácil de usar."
+          </p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar" style="background: var(--rojo)">CM</div>
+            <div>
+              <div class="testimonial-name">Carmen M.</div>
+              <div class="testimonial-role">Nieta, Murcia</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ── -->
+  <section class="cta" id="descarga">
+    <div class="section-inner cta-inner">
+      <div class="fade-up">
+        <h2>Empieza a gestionar<br>sin esfuerzo hoy mismo</h2>
+        <p>Descarga Gestionate!!! gratis y olvídate de los papeles importantes olvidados en un cajón.</p>
+        <div class="cta-btns">
+          <a href="#" class="btn-white">
+            📱 Descargar para Android
+          </a>
+          <a href="#como-funciona" class="btn-outline-white">Ver cómo funciona</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <span class="footer-logo">Gestionate!!!</span>
+    <p>© 2026 Gestionate!!! · Universidad de Alicante · TAES</p>
+  </footer>
+
+  <script>
+    // Fade-up al hacer scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
